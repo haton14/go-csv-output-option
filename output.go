@@ -52,6 +52,7 @@ func output(fileName string, csvWriteData [][]string) error {
 	if err != nil {
 		return fmt.Errorf("csv file create error. %w", err)
 	}
+	defer f.Close()
 	w := csv.NewWriter(f)
 	for _, record := range csvWriteData {
 		if err := w.Write(record); err != nil {
