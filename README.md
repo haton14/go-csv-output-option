@@ -2,7 +2,7 @@
 A simple Go library that optionally controls items to be output to CSV.
 
 ## Usage
-```
+```golang
 package main
 
 import (
@@ -41,4 +41,9 @@ func main() {
 
 	opt.Output("examlpe.csv", data)
 }
+```
+
+```Shell
+$ cat examlpe.csv
+111,taro
 ```
