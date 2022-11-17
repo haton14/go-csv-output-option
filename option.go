@@ -1,6 +1,9 @@
 package csvton
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 type Option struct {
 	value map[string]bool
@@ -8,14 +11,18 @@ type Option struct {
 
 const tagName string = "csv"
 
-func ParseOption(opt any) Option {
+func ParseOption(opt any) (*Option, error) {
 	count := reflect.TypeOf(opt).NumField()
 	parse := make(map[string]bool, count)
 	value := reflect.ValueOf(opt)
 	for i := 0; i < count; i++ {
+		optionFiledType := value.Field(i).Kind()
+		if optionFiledType != reflect.Bool {
+			return nil, fmt.Errorf("option filed expected type is bool. has type %s", optionFiledType)
+		}
 		parse[reflect.TypeOf(opt).Field(i).Tag.Get(tagName)] = value.Field(i).Bool()
 	}
-	return Option{
+	return &Option{
 		value: parse,
-	}
+	}, nil
 }

@@ -5,7 +5,11 @@ A simple Go library that optionally controls items to be output to CSV.
 ```
 package main
 
-import csvton "github.com/haton14/go-csv-output-option"
+import (
+	"log"
+
+	csvton "github.com/haton14/go-csv-output-option"
+)
 
 type ExampleOption struct {
 	HasName    bool `csv:"has_name"`
@@ -25,12 +29,15 @@ func main() {
 		Address: "tokyo",
 	}
 
-	opt := csvton.ParseOption(
+	opt, err := csvton.ParseOption(
 		ExampleOption{
 			HasName:    true,
 			HasAddress: false,
 		},
 	)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	opt.Output("examlpe.csv", data)
 }
