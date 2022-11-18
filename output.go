@@ -23,7 +23,7 @@ func (opt Option) Output(fileName string, data any) error {
 		dataLen := reflect.ValueOf(data).Len()
 		csvWriteData = make([][]string, 0, dataLen)
 		for i := 0; i < dataLen; i++ {
-			csvWriteData = append(csvWriteData, opt.convertRow(reflect.ValueOf(data).Index(i)))
+			csvWriteData = append(csvWriteData, opt.convertRow(reflect.ValueOf(data).Index(i).Interface()))
 		}
 	default:
 		return fmt.Errorf(errUnexpectedType, dataType)
